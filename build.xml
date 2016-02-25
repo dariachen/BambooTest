@@ -47,7 +47,7 @@
     <property name="testpath" value="${user.dir}"/>
     <property name="jmeter.home" value="${basedir}/.."/>
     <property name="report.title" value="Load Test Results"/>
-    <property name="stylefile" value="jmeter-results-detail-report_3.xsl">
+    <property name="stylefile" value="jmeter-results-detail-report_3.xsl"/>
     
     <!-- Name of test (without .jmx) -->
     <property name="test" value="Test"/>
