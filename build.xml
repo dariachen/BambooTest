@@ -88,13 +88,16 @@
     
     <target name="all" depends="run,report"/>
 
-    <target name="run">
+  <target name="clean">
+    <delete file="*"/>
+ </target>
+ 
+    <target name="run" depends="clean">
         <echo>funcMode = ${funcMode}</echo>
-        <delete file="${testpath}/${test}.html"/>
         <jmeter
             jmeterhome="${jmeter.home}"
-            testplan ="${testpath}/${test}.jmx"
-            resultlog="${testpath}/${test}.jtl">
+            testplan ="./${test}.jmx"
+            resultlog="$./${test}.jtl">
         <!--
             <jvmarg value="-Xincgc"/>
             <jvmarg value="-Xmx128m"/>
@@ -127,9 +130,9 @@
         <xslt
             classpathref="xslt.classpath"
             force="true"
-            in="${testpath}/${test}.jtl"
-            out="${testpath}/${test}.html"
-            style="${basedir}/jmeter-results-detail-report${style_version}.xsl">
+            in="./${test}.jtl"
+            out="./${test}.html"
+            style="./jmeter-results-detail-report_3.xsl">
             <param name="showData" expression="${show-data}"/>
             <param name="titleReport" expression="${report.title}"/>
             <param name="dateReport" expression="${report.datestamp}"/>
