@@ -90,8 +90,12 @@
     <target name="all" depends="run,report"/>
 
   <target name="clean">
-    <delete file="${testpath}/*.jtl"/>
-    <delete file="${testpath}/*.html"/>
+  	 <delete>
+      <fileset dir="${testpath}">
+        <include name="*.jtl"/>
+        <include name="*.html"/>
+      </fileset>
+    </delete>
  </target>
  
     <target name="run" depends="clean">
