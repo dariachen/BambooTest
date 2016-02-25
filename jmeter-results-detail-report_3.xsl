@@ -282,7 +282,7 @@
     <h2>Pages</h2>
 	<table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
 		<tr valign="top">
-			<th>URL</th>
+			<th>Test Cases</th>
 			<th>Tests</th>
 			<th>Failures</th>
 			<th>Success Rate</th>

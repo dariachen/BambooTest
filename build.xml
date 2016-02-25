@@ -104,7 +104,9 @@
             <jvmarg value="-Xmx128m"/>
             <jvmarg value="-Dproperty=value"/>
             <jmeterarg value="-qextra.properties"/>
+            
         -->
+        	<jmeterarg value="-Jworking_dir=${testpath}" />
             <!-- Force suitable defaults -->
             <property name="jmeter.save.saveservice.output_format" value="xml"/>
             <property name="jmeter.save.saveservice.assertion_results" value="all"/>
