@@ -163,5 +163,23 @@
         <echo>Check you have xalan and serializer jars in ${lib.dir}</echo>
     </target>
 
+	<java
+        classname="org.apache.tools.ant.launch.Launcher"
+        fork="true"
+        failonerror="true"
+        dir="${sub.builddir}"
+        timeout="4000000"
+        taskname="startAnt">
+   	 	<classpath>
+        	<pathelement location="${ant.home}/libexec/lib/ant-launcher.jar"/>
+    	</classpath>
+   	 	<arg value="-buildfile"/>
+    	<arg file="${sub.buildfile}"/>
+   	 	<arg value="-Dthis=this"/>
+  	  	<arg value="-Dthat=that"/>
+  	 	<arg value="-Dbasedir=${sub.builddir}"/>
+    	<arg value="-Dthe.other=the.other"/>
+    	<arg value="${sub.target}"/>
+		</java>
 
 </project>
