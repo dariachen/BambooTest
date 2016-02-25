@@ -47,6 +47,7 @@
     <property name="testpath" value="${user.dir}"/>
     <property name="jmeter.home" value="${basedir}/.."/>
     <property name="report.title" value="Load Test Results"/>
+    <property name="stylefile" value="jmeter-results-detail-report_3.xsl">
     
     <!-- Name of test (without .jmx) -->
     <property name="test" value="Test"/>
@@ -126,13 +127,14 @@
     </target>
 
     <target name="xslt-report" depends="_message_xalan">
+    	<copy file="${stylefile}" todir="${basedir}"/>
         <tstamp><format property="report.datestamp" pattern="yyyy/MM/dd HH:mm"/></tstamp>
         <xslt
             classpathref="xslt.classpath"
             force="true"
             in="./${test}.jtl"
             out="./${test}.html"
-            style="./jmeter-results-detail-report_3.xsl">
+            style="./${stylefile}">
             <param name="showData" expression="${show-data}"/>
             <param name="titleReport" expression="${report.title}"/>
             <param name="dateReport" expression="${report.datestamp}"/>
