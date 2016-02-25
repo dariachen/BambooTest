@@ -97,8 +97,8 @@
         <echo>funcMode = ${funcMode}</echo>
         <jmeter
             jmeterhome="${jmeter.home}"
-            testplan ="./${test}.jmx"
-            resultlog="$./${test}.jtl">
+            testplan ="${testpath}/${test}.jmx"
+            resultlog="${testpath}/${test}.jtl">
         <!--
             <jvmarg value="-Xincgc"/>
             <jvmarg value="-Xmx128m"/>
@@ -127,14 +127,14 @@
     </target>
 
     <target name="xslt-report" depends="_message_xalan">
-    	<copy file="${stylefile}" todir="${basedir}"/>
+    	<copy file="${testpath}/${stylefile}" todir="${basedir}"/>
         <tstamp><format property="report.datestamp" pattern="yyyy/MM/dd HH:mm"/></tstamp>
         <xslt
             classpathref="xslt.classpath"
             force="true"
-            in="./${test}.jtl"
-            out="./${test}.html"
-            style="./${stylefile}">
+            in="${testpath}/${test}.jtl"
+            out="${testpath}/${test}.html"
+            style="${testpath}/${stylefile}">
             <param name="showData" expression="${show-data}"/>
             <param name="titleReport" expression="${report.title}"/>
             <param name="dateReport" expression="${report.datestamp}"/>
