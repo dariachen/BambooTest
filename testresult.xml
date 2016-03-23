@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="pytest" skips="0" tests="10" time="450.776">
+    <testcase classname="mcsTestCases.SignInFunction" file="mcsTestCases.py" line="27" name="test_01_CheckSignInPage" time="72.42730617523193"></testcase><testcase classname="mcsTestCases.SignInFunction" file="mcsTestCases.py" line="45" name="test_02_SignInSuccessfully" time="17.407941102981567"><system-out>http://mcs.mediatek.io/v2console/
+Resources Help Owner.2 Development Management
+</system-out></testcase><testcase classname="mcsTestCases.SignInFunction" file="mcsTestCases.py" line="64" name="test_03_SignInWrongCredential" time="12.041962146759033"></testcase><testcase classname="mcsTestCases.SignInFunction" file="mcsTestCases.py" line="70" name="test_04_ForgetPassword" time="11.111099243164062"></testcase><testcase classname="mcsTestCases.SignInFunction" file="mcsTestCases.py" line="81" name="test_05_SignUp" time="11.619154930114746"><system-out>test_0323144954
+</system-out></testcase><testcase classname="mcsTestCases.createPrototype" file="mcsTestCases.py" line="115" name="test_02_AddPrototype" time="32.74468493461609"><system-out>start to create prototype...
+bySelenium20160323 14:50:17 (ID: P8VIgiWUKDJR) http://mcs.mediatek.io/v2console/development/products/P8VIgiWUKDJR
+</system-out></testcase><testcase classname="mcsTestCases.createPrototype" file="mcsTestCases.py" line="140" name="test_03_DataChannel" time="157.38818979263306"></testcase><testcase classname="mcsTestCases.createPrototype" file="mcsTestCases.py" line="164" name="test_04_TestDevice" time="56.22552514076233"><system-out>start to create test device...
+start to delete test device...
+</system-out></testcase><testcase classname="mcsTestCases.createPrototype" file="mcsTestCases.py" line="193" name="test_05_UserPrivileges" time="57.89252305030823"><failure message="selenium.common.exceptions.ElementNotVisibleException: Message: Element is not currently visible and so may not be interacted with
+Stacktrace:
+    at fxdriver.preconditions.visible (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:10045)
+    at DelayedCommand.prototype.checkPreconditions_ (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12597)
+    at DelayedCommand.prototype.executeInternal_/h (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12614)
+    at DelayedCommand.prototype.executeInternal_ (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12619)
+    at DelayedCommand.prototype.execute/&lt; (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12561)">self = &lt;mcsTestCases.createPrototype testMethod=test_05_UserPrivileges&gt;
+
+    def test_05_UserPrivileges(self):
+        mcs.mcsGotoDevelopmentPage(self.driver, self.wait)
+        protoDetailButton= self.wait.until(EC.element_to_be_clickable((By.XPATH, &quot;//div[@class=&apos;displayCard ng-scope&apos;][1]/div[@class=&apos;productDetail&apos;]/a[text()=&apos;Detail&apos;]&quot;)))
+        protoDetailButton.click()
+        #add users
+        mcs.mcsAddUserPrivileges(self.driver, self.wait, env.admin, &quot;administrator&quot;)
+        mcs.mcsAddUserPrivileges(self.driver, self.wait, env.viewer, &quot;viewer&quot;)
+        #time.sleep(3)
+        #check if add user successfully
+        userList = self.wait.until(EC.presence_of_all_elements_located((By.XPATH, &quot;//tr[@ng-repeat=&apos;privilege in privileges&apos;]&quot;)))
+        mailRoleDic = {}
+        for i in range(len(userList)):
+            i = i + 1
+            emailXPath = &quot;//tr[@ng-repeat=&apos;privilege in privileges&apos;][&quot; + str(i) + &quot;]/td[@class=&apos;ng-binding&apos;][3]&quot;
+            print(emailXPath)
+            email = self.wait.until(EC.presence_of_element_located((By.XPATH, emailXPath)))
+            roleXPath = &quot;//tr[@ng-repeat=&apos;privilege in privileges&apos;][&quot; + str(i) + &quot;]/td[@class=&apos;ng-binding&apos;][4]&quot;
+            print(roleXPath)
+            role = self.wait.until(EC.presence_of_element_located((By.XPATH, roleXPath)))
+    
+            mailRoleDic[email.text] = role.text
+            print(mailRoleDic)
+    
+        self.assertEqual(mailRoleDic[env.admin], &quot;Administrator&quot;, mailRoleDic[env.admin] + &quot;is not admin&quot;)
+        self.assertEqual(mailRoleDic[env.viewer], &quot;Viewer&quot;, mailRoleDic[env.viewer] + &quot; is not viewer&quot;)
+    
+        #delete users
+&gt;       mcs.mcsDeleteAllUserPrivileges(self.driver, self.wait)
+
+mcsTestCases.py:221: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mcs.py:207: in mcsDeleteAllUserPrivileges
+    currentDeleteIcon[1].click()
+/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/selenium/webdriver/remote/webelement.py:75: in click
+    self._execute(Command.CLICK_ELEMENT)
+/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/selenium/webdriver/remote/webelement.py:469: in _execute
+    return self._parent.execute(command, params)
+/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/selenium/webdriver/remote/webdriver.py:201: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1036fc860&gt;
+response = {&apos;status&apos;: 500, &apos;value&apos;: &apos;{&quot;name&quot;:&quot;clickElement&quot;,&quot;sessionId&quot;:&quot;8ad7dfbf-b3eb-5343-9716-abae9554db15&quot;,&quot;status&quot;:11,&quot;value...pvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js&quot;,&quot;lineNumber&quot;:12561,&quot;columnNumber&quot;:5}]}}&apos;}
+
+    def check_response(self, response):
+        &quot;&quot;&quot;
+            Checks that a JSON response from the WebDriver does not have an error.
+    
+            :Args:
+             - response - The JSON response from the WebDriver server as a dictionary
+               object.
+    
+            :Raises: If the response contains an error message.
+            &quot;&quot;&quot;
+        status = response.get(&apos;status&apos;, None)
+        if status is None or status == ErrorCode.SUCCESS:
+            return
+    
+        value = None
+        message = response.get(&quot;message&quot;, &quot;&quot;)
+        screen = response.get(&quot;screen&quot;, &quot;&quot;)
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get(&apos;value&apos;, None)
+            if value_json and isinstance(value_json, basestring):
+                import json
+                try:
+                    value = json.loads(value_json)
+                    status = value.get(&apos;error&apos;, None)
+                    if status is None:
+                        status = value[&quot;status&quot;]
+                        message = value[&quot;value&quot;]
+                        if not isinstance(message, basestring):
+                            value = message
+                            try:
+                                message = message[&apos;message&apos;]
+                            except TypeError:
+                                message = None
+                    else:
+                        message = value.get(&apos;message&apos;, None)
+                except ValueError:
+                    pass
+    
+        exception_class = ErrorInResponseException
+        if status in ErrorCode.NO_SUCH_ELEMENT:
+            exception_class = NoSuchElementException
+        elif status in ErrorCode.NO_SUCH_FRAME:
+            exception_class = NoSuchFrameException
+        elif status in ErrorCode.NO_SUCH_WINDOW:
+            exception_class = NoSuchWindowException
+        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:
+            exception_class = StaleElementReferenceException
+        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:
+            exception_class = ElementNotVisibleException
+        elif status in ErrorCode.INVALID_ELEMENT_STATE:
+            exception_class = InvalidElementStateException
+        elif status in ErrorCode.INVALID_SELECTOR \
+                or status in ErrorCode.INVALID_XPATH_SELECTOR \
+                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:
+            exception_class = InvalidSelectorException
+        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:
+            exception_class = ElementNotSelectableException
+        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:
+            exception_class = WebDriverException
+        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:
+            exception_class = WebDriverException
+        elif status in ErrorCode.TIMEOUT:
+            exception_class = TimeoutException
+        elif status in ErrorCode.SCRIPT_TIMEOUT:
+            exception_class = TimeoutException
+        elif status in ErrorCode.UNKNOWN_ERROR:
+            exception_class = WebDriverException
+        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:
+            exception_class = UnexpectedAlertPresentException
+        elif status in ErrorCode.NO_ALERT_OPEN:
+            exception_class = NoAlertPresentException
+        elif status in ErrorCode.IME_NOT_AVAILABLE:
+            exception_class = ImeNotAvailableException
+        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:
+            exception_class = ImeActivationFailedException
+        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:
+            exception_class = MoveTargetOutOfBoundsException
+        else:
+            exception_class = WebDriverException
+        if value == &apos;&apos; or value is None:
+            value = response[&apos;value&apos;]
+        if isinstance(value, basestring):
+            if exception_class == ErrorInResponseException:
+                raise exception_class(response, value)
+            raise exception_class(value)
+        if message == &quot;&quot; and &apos;message&apos; in value:
+            message = value[&apos;message&apos;]
+    
+        screen = None
+        if &apos;screen&apos; in value:
+            screen = value[&apos;screen&apos;]
+    
+        stacktrace = None
+        if &apos;stackTrace&apos; in value and value[&apos;stackTrace&apos;]:
+            stacktrace = []
+            try:
+                for frame in value[&apos;stackTrace&apos;]:
+                    line = self._value_or_default(frame, &apos;lineNumber&apos;, &apos;&apos;)
+                    file = self._value_or_default(frame, &apos;fileName&apos;, &apos;&lt;anonymous&gt;&apos;)
+                    if line:
+                        file = &quot;%s:%s&quot; % (file, line)
+                    meth = self._value_or_default(frame, &apos;methodName&apos;, &apos;&lt;anonymous&gt;&apos;)
+                    if &apos;className&apos; in frame:
+                        meth = &quot;%s.%s&quot; % (frame[&apos;className&apos;], meth)
+                    msg = &quot;    at %s (%s)&quot;
+                    msg = msg % (meth, file)
+                    stacktrace.append(msg)
+            except TypeError:
+                pass
+        if exception_class == ErrorInResponseException:
+            raise exception_class(response, message)
+        elif exception_class == UnexpectedAlertPresentException and &apos;alert&apos; in value:
+            raise exception_class(message, screen, stacktrace, value[&apos;alert&apos;].get(&apos;text&apos;))
+&gt;       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotVisibleException: Message: Element is not currently visible and so may not be interacted with
+E       Stacktrace:
+E           at fxdriver.preconditions.visible (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:10045)
+E           at DelayedCommand.prototype.checkPreconditions_ (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12597)
+E           at DelayedCommand.prototype.executeInternal_/h (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12614)
+E           at DelayedCommand.prototype.executeInternal_ (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12619)
+E           at DelayedCommand.prototype.execute/&lt; (file:///var/folders/tl/g3p8dn6n2cj8fhb1ysxz90j9_dwfs1/T/tmpvthvv7eu/extensions/fxdriver@googlecode.com/components/command-processor.js:12561)
+
+/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/selenium/webdriver/remote/errorhandler.py:194: ElementNotVisibleException</failure><system-out>//tr[@ng-repeat=&apos;privilege in privileges&apos;][1]/td[@class=&apos;ng-binding&apos;][3]
+//tr[@ng-repeat=&apos;privilege in privileges&apos;][1]/td[@class=&apos;ng-binding&apos;][4]
+{&apos;mcs.io.5@mailinator.com&apos;: &apos;Viewer&apos;}
+//tr[@ng-repeat=&apos;privilege in privileges&apos;][2]/td[@class=&apos;ng-binding&apos;][3]
+//tr[@ng-repeat=&apos;privilege in privileges&apos;][2]/td[@class=&apos;ng-binding&apos;][4]
+{&apos;mcs.io.5@mailinator.com&apos;: &apos;Viewer&apos;, &apos;mcs.io.8@mailinator.com&apos;: &apos;Administrator&apos;}
+//tr[@ng-repeat=&apos;privilege in privileges&apos;][3]/td[@class=&apos;ng-binding&apos;][3]
+//tr[@ng-repeat=&apos;privilege in privileges&apos;][3]/td[@class=&apos;ng-binding&apos;][4]
+{&apos;mcs.io.5@mailinator.com&apos;: &apos;Viewer&apos;, &apos;mcs.io.8@mailinator.com&apos;: &apos;Administrator&apos;, &apos;mcs.io.2@mailinator.com&apos;: &apos;Owner&apos;}
+</system-out></testcase><testcase classname="mcsTestCases.createPrototype" file="mcsTestCases.py" line="222" name="test_99_DeletePrototype" time="21.571527004241943"><system-out>delete No.0 prototypes
+</system-out></testcase></testsuite>
